@@ -1,16 +1,7 @@
 const fs = require('fs');
-const _ = require('lodash');
 
 function Put(req, res, localPath) {
 	const data = req.body;
-	if (_.isEqual(data, {})) {
-		res.status(400).json({ error: 1, msg: 'Invalid body' });
-		return;
-	}
-	if (data.jwt != process.env.JWT) {
-		res.status(400).json({ error: 1, msg: 'Invalid token' });
-		return;
-	}
 
 	if (typeof data.menu == 'undefined') {
 		res.status(400).json({ error: 1, msg: 'Missing menu' });

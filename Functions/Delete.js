@@ -1,17 +1,6 @@
 const fs = require('fs');
-const _ = require('lodash');
 
 function Delete(req, res, localPath) {
-	const data = req.body;
-	if (_.isEqual(data, {})) {
-		res.status(400).json({ error: 1, msg: 'Invalid body' });
-		return;
-	}
-	if (data.jwt != process.env.JWT) {
-		res.status(400).json({ error: 1, msg: 'Invalid token' });
-		return;
-	}
-
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 

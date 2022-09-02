@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const _ = require('lodash');
 require('dotenv').config();
 
 const localPath = '/home/pi/menus/';
@@ -25,13 +26,32 @@ app.get('/', (req, res) => {
 });
 
 app.post('/menus/:month/:day', (req, res) => {
+	if (!verify(req, res)) return;
 	Post(req, res, localPath);
 });
 
 app.put('/menus/:month/:day', (req, res) => {
+	if (!verify(req, res)) return;
 	Put(req, res, localPath);
 });
 
 app.delete('/menus/:month/:day', (req, res) => {
+	if (!verify(req, res)) return;
 	Delete(req, res, localPath);
 });
+
+
+function verify(req, res) {
+	const data = req.body;
+	if (_.isEqual(data, {})) {
+		res.status(400).json({ error: 1, msg: 'Invalid body' });
+		return null;
+	}
+
+	if (data.jwt != process.env.JWT) {
+		res.status(400).json({ error: 1, msg: 'Invalid token' });
+		return null;
+	}
+
+	return true;
+}
