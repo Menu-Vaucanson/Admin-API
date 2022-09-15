@@ -1,4 +1,6 @@
 *.env
 /node_modules/
 /menus/
+/rates/
+/Logs/
 *.http

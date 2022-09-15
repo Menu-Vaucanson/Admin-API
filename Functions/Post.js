@@ -11,16 +11,16 @@ function Post(req, res, localPath) {
 	const day = req.params.day;
 	const month = req.params.month;
 
-	if (fs.existsSync(localPath + `/${month}/${day}.json`)) {
+	if (fs.existsSync(localPath + `/menus/${month}/${day}.json`)) {
 		res.status(400).json({ error: 1, msg: 'This day already exist' });
 		return;
 	}
 
-	if (!fs.existsSync(localPath + `/${month}/`)) {
-		fs.mkdirSync(localPath + `/${month}/`);
+	if (!fs.existsSync(localPath + `/menus/${month}/`)) {
+		fs.mkdirSync(localPath + `/menus/${month}/`);
 	}
 
-	fs.writeFileSync(localPath + `/${month}/${day}.json`, JSON.stringify(data.menu));
+	fs.writeFileSync(localPath + `/menus/${month}/${day}.json`, JSON.stringify(data.menu));
 
 	res.status(200).json({ error: 0, msg: 'Success' });
 }

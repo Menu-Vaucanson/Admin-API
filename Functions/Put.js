@@ -20,14 +20,14 @@ function Put(req, res, localPath) {
 		return;
 	}
 
-	if (!fs.existsSync(localPath + `/${month}/${day}.json`)) {
+	if (!fs.existsSync(localPath + `/menus/${month}/${day}.json`)) {
 		res.status(400).json({ error: 1, msg: 'Menu not found' });
 		return;
 	}
 
-	const oldMenu = JSON.parse(fs.readFileSync(localPath + `/${month}/${day}.json`));
+	const oldMenu = JSON.parse(fs.readFileSync(localPath + `/menus/${month}/${day}.json`));
 	const newMenu = Object.assign(oldMenu, data.menu);
-	fs.writeFileSync(localPath + `/${month}/${day}.json`, JSON.stringify(newMenu));
+	fs.writeFileSync(localPath + `/menus/${month}/${day}.json`, JSON.stringify(newMenu));
 	res.status(200).json({ error: 0, msg: 'Success' });
 }
 
