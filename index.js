@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const _ = require('lodash');
 require('dotenv').config();
 
@@ -13,6 +14,7 @@ const { getLog } = require('./Functions/getLog');
 const { getLogs } = require('./Functions/getLogs');
 
 app.use(express.json());
+app.use(cors());
 app.use((err, req, res, next) => {
 	if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
 		return res.sendStatus(400);

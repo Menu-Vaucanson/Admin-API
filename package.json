@@ -9,6 +9,7 @@
 	"author": "Wiwok",
 	"license": "ISC",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"dotenv": "^16.0.1",
 		"express": "^4.18.1",
 		"lodash": "^4.17.21"
