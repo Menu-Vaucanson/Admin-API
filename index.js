@@ -4,7 +4,7 @@ const cors = require('cors');
 const _ = require('lodash');
 require('dotenv').config();
 
-const localPath = '/home/pi/';
+const localPath = '/home/pi/datas/';
 
 const { Post } = require('./Functions/Post');
 const { Put } = require('./Functions/Put');
