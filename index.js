@@ -28,6 +28,11 @@ app.get('/', (req, res) => {
 	res.status(200).json({ error: 0, msg: 'Online !' });
 });
 
+app.get('/login', (req, res) => {
+	if (!verify(req, res)) return;
+	res.status(200).json({ error: 0, msg: 'Token valid' });
+});
+
 app.get('/logs/:month/:day', (req, res) => {
 	if (!verify(req, res)) return;
 	getLog(req, res, localPath);
