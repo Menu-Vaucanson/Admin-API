@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 	res.status(200).json({ error: 0, msg: 'Online !' });
 });
 
-app.get('/login', (req, res) => {
+app.post('/login', (req, res) => {
 	if (!verify(req, res)) return;
 	res.status(200).json({ error: 0, msg: 'Token valid' });
 });
