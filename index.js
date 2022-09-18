@@ -1,10 +1,11 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
 const _ = require('lodash');
+const app = express();
 require('dotenv').config();
 
-const localPath = '/home/pi/datas/';
 
 const { Post } = require('./Functions/Post');
 const { Put } = require('./Functions/Put');
@@ -14,6 +15,22 @@ const { getLogs } = require('./Functions/getLogs');
 const { getRates } = require('./Functions/getRates');
 const { getRatesEvening } = require('./Functions/getRatesEvening');
 
+const localPath = '/home/pi/datas/';
+
+const key = fs.readFileSync('../certs/selfsigned.key');
+const cert = fs.readFileSync('../certs/selfsigned.crt');
+const options = {
+	key: key,
+	cert: cert
+};
+
+const server = https.createServer(options, app);
+
+server.listen(8081, () => {
+	console.log('Server started !');
+});
+
+
 app.use(express.json());
 app.use(cors());
 app.use((err, req, res, next) => {
@@ -21,10 +38,6 @@ app.use((err, req, res, next) => {
 		return res.sendStatus(400).json({ error: 1, msg: 'Invalid body' });
 	}
 	next();
-});
-
-app.listen(8081, () => {
-	console.log('Server started');
 });
 
 app.get('/', (req, res) => {
