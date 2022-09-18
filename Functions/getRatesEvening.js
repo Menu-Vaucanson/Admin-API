@@ -5,12 +5,12 @@ function getRatesEvening(req, res, localPath) {
 	const month = req.params.month;
 
 	if (!fs.existsSync(localPath + `/ratesEvening/${month}`)) {
-		res.status(400).json({ error: 1, msg: 'Month not found' });
+		res.status(404).json({ error: 1, msg: 'Month not found' });
 		return;
 	}
 
 	if (!fs.existsSync(localPath + `/ratesEvening/${month}/${day}.json`)) {
-		res.status(400).json({ error: 1, msg: 'Day not found' });
+		res.status(404).json({ error: 1, msg: 'Day not found' });
 		return;
 	}
 

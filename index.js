@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors());
 app.use((err, req, res, next) => {
 	if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-		return res.sendStatus(400);
+		return res.sendStatus(400).json({ error: 1, msg: 'Invalid body' });
 	}
 	next();
 });
@@ -75,7 +75,7 @@ function verify(req, res) {
 	}
 
 	if (data.jwt != process.env.JWT) {
-		res.status(400).json({ error: 1, msg: 'Invalid token' });
+		res.status(401).json({ error: 1, msg: 'Invalid token' });
 		return false;
 	}
 
