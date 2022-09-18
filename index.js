@@ -11,6 +11,8 @@ const { Put } = require('./Functions/Put');
 const { Delete } = require('./Functions/Delete');
 
 const { getLogs } = require('./Functions/getLogs');
+const { getRates } = require('./Functions/getRates');
+const { getRatesEvening } = require('./Functions/getRatesEvening');
 
 app.use(express.json());
 app.use(cors());
@@ -37,6 +39,16 @@ app.post('/login', (req, res) => {
 app.get('/logs/:month', (req, res) => {
 	if (!verify(req, res)) return;
 	getLogs(req, res, localPath);
+});
+
+app.get('/rates/:month/:day', (req, res) => {
+	if (!verify(req, res)) return;
+	getRates(req, res, localPath);
+});
+
+app.get('/ratesEvening/:month/:day', (req, res) => {
+	if (!verify(req, res)) return;
+	getRatesEvening(req, res, localPath);
 });
 
 app.post('/menus/:month/:day', (req, res) => {
