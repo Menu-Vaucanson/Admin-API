@@ -36,17 +36,17 @@ app.post('/login', (req, res) => {
 	res.status(200).json({ error: 0, msg: 'Token valid' });
 });
 
-app.get('/logs/:month', (req, res) => {
+app.post('/logs/:month', (req, res) => {
 	if (!verify(req, res)) return;
 	getLogs(req, res, localPath);
 });
 
-app.get('/rates/:month/:day', (req, res) => {
+app.post('/rates/:month/:day', (req, res) => {
 	if (!verify(req, res)) return;
 	getRates(req, res, localPath);
 });
 
-app.get('/ratesEvening/:month/:day', (req, res) => {
+app.post('/ratesEvening/:month/:day', (req, res) => {
 	if (!verify(req, res)) return;
 	getRatesEvening(req, res, localPath);
 });
