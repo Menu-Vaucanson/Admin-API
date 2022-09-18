@@ -10,7 +10,6 @@ const { Post } = require('./Functions/Post');
 const { Put } = require('./Functions/Put');
 const { Delete } = require('./Functions/Delete');
 
-const { getLog } = require('./Functions/getLog');
 const { getLogs } = require('./Functions/getLogs');
 
 app.use(express.json());
@@ -35,12 +34,7 @@ app.post('/login', (req, res) => {
 	res.status(200).json({ error: 0, msg: 'Token valid' });
 });
 
-app.get('/logs/:month/:day', (req, res) => {
-	if (!verify(req, res)) return;
-	getLog(req, res, localPath);
-});
-
-app.get('/Logs/:month', (req, res) => {
+app.get('/logs/:month', (req, res) => {
 	if (!verify(req, res)) return;
 	getLogs(req, res, localPath);
 });
