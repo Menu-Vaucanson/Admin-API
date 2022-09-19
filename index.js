@@ -13,6 +13,7 @@ const { Delete } = require('./Functions/Delete');
 
 const { getLogs } = require('./Functions/getLogs');
 const { getRates } = require('./Functions/getRates');
+const { getRatesMonth } = require('./Functions/getRatesMonth');
 const { getRatesEvening } = require('./Functions/getRatesEvening');
 
 const localPath = '/home/pi/datas/';
@@ -52,6 +53,11 @@ app.post('/login', (req, res) => {
 app.post('/logs/:month', (req, res) => {
 	if (!verify(req, res)) return;
 	getLogs(req, res, localPath);
+});
+
+app.post('/rates/:month', (req, res) => {
+	if (!verify(req, res)) return;
+	getRatesMonth(req, res, localPath);
 });
 
 app.post('/rates/:month/:day', (req, res) => {
