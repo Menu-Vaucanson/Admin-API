@@ -9,7 +9,9 @@ function getRatesMonth(req, res, localPath) {
 	}
 
 	const Rates = fs.readdirSync(localPath + `/rates/${month}/`).map(rate => {
-		return JSON.parse(fs.readFileSync(localPath + `/rates/${month}/` + rate));
+		const d = JSON.parse(fs.readFileSync(localPath + `/rates/${month}/` + rate));
+		d.day = rate.replace('.json', '');
+		return d;
 	});
 
 	res.status(200).json({ error: 0, data: Rates });
