@@ -8,8 +8,8 @@ function Post(req, res, localPath) {
 		return;
 	}
 
-	const day = req.params.day;
-	const month = req.params.month;
+	const day = parseInt(req.params.day);
+	const month = parseInt(req.params.month);
 
 	if (fs.existsSync(localPath + `/menus/${month}/${day}.json`)) {
 		res.status(400).json({ error: 1, msg: 'This day already exist' });
