@@ -80,7 +80,7 @@ app.put('/menus/:month/:day', (req, res) => {
 	Put(req, res, localPath);
 });
 
-app.delete('/menus/:month/:day', (req, res) => {
+app.post('/deleteMenus/:month/:day', (req, res) => {
 	if (!verify(req, res)) return;
 	Delete(req, res, localPath);
 });
