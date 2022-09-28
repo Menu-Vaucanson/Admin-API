@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function getLogs(req, res, localPath) {
+function getLogs(req: any, res: any, localPath: string) {
 	const month = req.params.month;
 
 	if (!fs.existsSync(localPath + `/logs/${month}.json`)) {
@@ -8,9 +8,9 @@ function getLogs(req, res, localPath) {
 		return;
 	}
 
-	const Logs = JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`));
+	const Logs = JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`).toString());
 
 	res.status(200).json({ error: 0, data: Logs });
 }
 
-module.exports = { getLogs };
+export default getLogs;

@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function getRatesLogsMonth(req, res, localPath) {
+function getRatesLogsMonth(req: any, res: any, localPath: string) {
 	const month = req.params.month;
 
 	if (!fs.existsSync(localPath + `/logs/${month}.json`)) {
@@ -8,33 +8,35 @@ function getRatesLogsMonth(req, res, localPath) {
 		return;
 	}
 
-	const Logs = [];
+	const Logs: Array<{ date: Date, view: number, rate: number }> = [];
 
-	JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`)).forEach(log => {
-		const index = Logs.findIndex(v => {
+	JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`).toString()).forEach((log: { date: any }) => {
+		const index = Logs.findIndex((v: { date: any }) => {
 			return new Date(v.date).toLocaleDateString() == new Date(log.date).toLocaleDateString();
 		});
 		if (index != -1) {
 			Logs[index] = {
 				date: new Date(log.date),
-				view: Logs[index].view + 1
+				view: Logs[index].view + 1,
+				rate: 0
 			};
 		} else {
 			Logs.push({
 				date: new Date(log.date),
-				view: 1
+				view: 1,
+				rate: 0
 			});
 		}
 	});
 
-	const Rates = [];
+	const Rates: Array<{ date: Date, rate: number }> = [];
 	if (fs.existsSync(localPath + `/rates/${month}/`)) {
 		fs.readdirSync(localPath + `/rates/${month}/`).forEach(rate => {
-			const D = JSON.parse(fs.readFileSync(localPath + `/rates/${month}/` + rate));
+			const D = JSON.parse(fs.readFileSync(localPath + `/rates/${month}/` + rate).toString());
 			const day = rate.replace('.json', '');
 			const date = new Date();
 			const data = {
-				date: new Date(date.getFullYear(), month - 1, day),
+				date: new Date(date.getFullYear(), month - 1, parseInt(day)),
 				rate: D.length
 			};
 
@@ -44,8 +46,8 @@ function getRatesLogsMonth(req, res, localPath) {
 
 	const result = Logs;
 
-	Rates.forEach(rate => {
-		const index = result.findIndex(v => {
+	Rates.forEach((rate: { date: any, rate: number }) => {
+		const index = result.findIndex((v: { date: any }) => {
 			return new Date(v.date).toLocaleDateString() == new Date(rate.date).toLocaleDateString();
 		});
 		if (index != -1) {
@@ -57,6 +59,7 @@ function getRatesLogsMonth(req, res, localPath) {
 		} else {
 			result.push({
 				date: new Date(rate.date),
+				view: 0,
 				rate: rate.rate
 			});
 		}
@@ -67,4 +70,4 @@ function getRatesLogsMonth(req, res, localPath) {
 	res.status(200).json({ error: 0, data: result });
 }
 
-module.exports = { getRatesLogsMonth };
+export default getRatesLogsMonth;

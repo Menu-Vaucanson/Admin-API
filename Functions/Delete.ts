@@ -1,13 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function Put(req, res, localPath) {
-	const data = req.body;
-
-	if (typeof data.menu == 'undefined') {
-		res.status(400).json({ error: 1, msg: 'Missing menu' });
-		return;
-	}
-
+function Delete(req: any, res: any, localPath: string) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 
@@ -25,10 +18,9 @@ function Put(req, res, localPath) {
 		return;
 	}
 
-	const oldMenu = JSON.parse(fs.readFileSync(localPath + `/menus/${month}/${day}.json`));
-	const newMenu = Object.assign(oldMenu, data.menu);
-	fs.writeFileSync(localPath + `/menus/${month}/${day}.json`, JSON.stringify(newMenu));
+	fs.unlinkSync(localPath + `/menus/${month}/${day}.json`);
+
 	res.status(200).json({ error: 0, msg: 'Success' });
 }
 
-module.exports = { Put };
+export default Delete;

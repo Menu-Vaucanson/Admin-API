@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function Post(req, res, localPath) {
+function Post(req: any, res: any, localPath: string) {
 	const data = req.body;
 
 	if (typeof data.menu == 'undefined') {
@@ -25,4 +25,4 @@ function Post(req, res, localPath) {
 	res.status(200).json({ error: 0, msg: 'Success' });
 }
 
-module.exports = { Post };
+export default Post;

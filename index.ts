@@ -1,21 +1,20 @@
-const express = require('express');
-const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
-const _ = require('lodash');
+import express from 'express';
+import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
+import _ from 'lodash';
 const app = express();
 require('dotenv').config();
 
 
-const { Post } = require('./Functions/Post');
-const { Put } = require('./Functions/Put');
-const { Delete } = require('./Functions/Delete');
+import Post from './Functions/Post';
+import Delete from './Functions/Delete';
 
-const { getLogs } = require('./Functions/getLogs');
-const { getRates } = require('./Functions/getRates');
-const { getRatesMonth } = require('./Functions/getRatesMonth');
-const { getRatesEvening } = require('./Functions/getRatesEvening');
-const { getRatesLogsMonth } = require('./Functions/getRatesLogsMonth');
+import getLogs from './Functions/getLogs';
+import getRates from './Functions/getRates';
+import getRatesMonth from './Functions/getRatesMonth';
+import getRatesEvening from './Functions/getRatesEvening';
+import getRatesLogsMonth from './Functions/getRatesLogsMonth';
 
 const localPath = '/home/pi/datas/';
 
@@ -32,67 +31,61 @@ server.listen(8081, () => {
 	console.log('Server started !');
 });
 
-
 app.use(express.json());
 app.use(cors());
-app.use((err, req, res, next) => {
+app.use((err: { status: any }, req: any, res: any, next: Function) => {
 	if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
 		return res.sendStatus(400).json({ error: 1, msg: 'Invalid body' });
 	}
 	next();
 });
 
-app.get('/', (req, res) => {
+app.get('/', (req: any, res: any) => {
 	res.status(200).json({ error: 0, msg: 'Online !' });
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	res.status(200).json({ error: 0, msg: 'Token valid' });
 });
 
-app.post('/logs/:month', (req, res) => {
+app.post('/logs/:month', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	getLogs(req, res, localPath);
 });
 
-app.post('/rates/:month', (req, res) => {
+app.post('/rates/:month', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	getRatesMonth(req, res, localPath);
 });
 
-app.post('/ratesLogs/:month', (req, res) => {
+app.post('/ratesLogs/:month', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	getRatesLogsMonth(req, res, localPath);
 });
 
-app.post('/rates/:month/:day', (req, res) => {
+app.post('/rates/:month/:day', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	getRates(req, res, localPath);
 });
 
-app.post('/ratesEvening/:month/:day', (req, res) => {
+app.post('/ratesEvening/:month/:day', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	getRatesEvening(req, res, localPath);
 });
 
-app.post('/menus/:month/:day', (req, res) => {
+app.post('/menus/:month/:day', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	Post(req, res, localPath);
 });
 
-app.put('/menus/:month/:day', (req, res) => {
-	if (!verify(req, res)) return;
-	Put(req, res, localPath);
-});
-
-app.post('/deleteMenus/:month/:day', (req, res) => {
+app.post('/deleteMenus/:month/:day', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	Delete(req, res, localPath);
 });
 
 
-function verify(req, res) {
+function verify(req: any, res: any) {
 	const data = req.body;
 	if (_.isEqual(data, {})) {
 		res.status(400).json({ error: 1, msg: 'Invalid body' });

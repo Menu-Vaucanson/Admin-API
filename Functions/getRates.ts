@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function getRates(req, res, localPath) {
+function getRates(req: any, res: any, localPath: string) {
 	const day = req.params.day;
 	const month = req.params.month;
 
@@ -14,9 +14,9 @@ function getRates(req, res, localPath) {
 		return;
 	}
 
-	const Rates = JSON.parse(fs.readFileSync(localPath + `/rates/${month}/${day}.json`));
+	const Rates = JSON.parse(fs.readFileSync(localPath + `/rates/${month}/${day}.json`).toString());
 
 	res.status(200).json({ error: 0, data: Rates });
 }
 
-module.exports = { getRates };
+export default getRates;
