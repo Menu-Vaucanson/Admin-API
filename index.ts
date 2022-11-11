@@ -33,7 +33,7 @@ server.listen(8081, () => {
 
 app.use(express.json());
 app.use(cors());
-app.use((err: { status: any }, req: any, res: any, next: Function) => {
+app.use((err: { status: number }, req: any, res: any, next: Function) => {
 	if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
 		return res.sendStatus(400).json({ error: 1, msg: 'Invalid body' });
 	}
@@ -85,7 +85,7 @@ app.post('/deleteMenus/:month/:day', (req: any, res: any) => {
 });
 
 
-function verify(req: any, res: any) {
+function verify(req: any, res: any): boolean {
 	const data = req.body;
 	if (_.isEqual(data, {})) {
 		res.status(400).json({ error: 1, msg: 'Invalid body' });
