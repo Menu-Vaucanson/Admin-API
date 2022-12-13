@@ -92,7 +92,7 @@ function verify(req: any, res: any): boolean {
 		return false;
 	}
 
-	if (data.jwt != process.env.JWT) {
+	if (data.jwt != process.env.JWT && data.jwt != process.env.JWT2) {
 		res.status(401).json({ error: 1, msg: 'Invalid token' });
 		return false;
 	}
