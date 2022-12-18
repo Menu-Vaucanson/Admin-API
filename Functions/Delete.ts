@@ -1,6 +1,10 @@
 import fs from 'fs';
 
+import AdminCheck from './AdminCheck';
+
 function Delete(req: any, res: any, localPath: string) {
+	if (!AdminCheck(res, req)) return;
+
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 

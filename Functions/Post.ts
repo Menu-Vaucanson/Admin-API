@@ -1,6 +1,10 @@
 import fs from 'fs';
 
+import AdminCheck from './AdminCheck';
+
 function Post(req: any, res: any, localPath: string) {
+	if (!AdminCheck(res, req)) return;
+
 	const data = req.body;
 
 	if (typeof data.menu == 'undefined') {
