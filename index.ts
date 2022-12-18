@@ -15,6 +15,7 @@ import getRates from './Functions/getRates';
 import getRatesEvening from './Functions/getRatesEvening';
 import getRatesLogsMonth from './Functions/getRatesLogsMonth';
 import getRatesMonth from './Functions/getRatesMonth';
+import getRatesMonthEvening from './Functions/getRatesMonthEvening';
 
 const localPath = '/home/pi/datas/';
 
@@ -57,6 +58,11 @@ app.post('/logs/:month', (req: any, res: any) => {
 app.post('/rates/:month', (req: any, res: any) => {
 	if (!verify(req, res)) return;
 	getRatesMonth(req, res, localPath);
+});
+
+app.post('/ratesEvening/:month', (req: any, res: any) => {
+	if (!verify(req, res)) return;
+	getRatesMonthEvening(req, res, localPath);
 });
 
 app.post('/ratesLogs/:month', (req: any, res: any) => {
