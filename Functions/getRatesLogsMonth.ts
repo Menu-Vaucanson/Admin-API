@@ -12,7 +12,7 @@ function getRatesLogsMonth(req: any, res: any, localPath: string) {
 
 	JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`).toString()).forEach((log: { date: any }) => {
 		const index = Logs.findIndex((v: { date: any }) => {
-			return new Date(v.date).toLocaleDateString() == new Date(log.date).toLocaleDateString();
+			return new Date(v.date).getDate() == new Date(log.date).getDate();
 		});
 		if (index != -1) {
 			Logs[index] = {
@@ -48,7 +48,7 @@ function getRatesLogsMonth(req: any, res: any, localPath: string) {
 
 	Rates.forEach((rate: { date: any, rate: number }) => {
 		const index = result.findIndex((v: { date: any }) => {
-			return new Date(v.date).toLocaleDateString() == new Date(rate.date).toLocaleDateString();
+			return new Date(v.date).getDate() == new Date(rate.date).getDate();
 		});
 		if (index != -1) {
 			result[index] = {
